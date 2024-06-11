@@ -1,14 +1,11 @@
 package main
 
 import (
-	"Backend/Controller"
 	"Backend/Database"
-	"fmt"
+	"Backend/Routes"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"log"
-	"math/rand"
-	"strconv"
-	"time"
 )
 
 func main() {
@@ -18,19 +15,19 @@ func main() {
 		log.Fatal("Error en", err)
 	}
 
-	getMem()
+	app.Use(cors.New())
+
+	Routes.Setup(app)
 
 	if err := app.Listen(":8000"); err != nil {
 		panic(err)
 	}
-
-	time.Sleep(time.Second * 500)
 }
 
-func getMem() {
-	for range time.Tick(time.Second * 1) {
-		percentMem := strconv.Itoa(rand.Intn(100))
-		fmt.Println(percentMem)
-		Controller.InsertData("ram", percentMem)
-	}
-}
+//func getMem() {
+//	for range time.Tick(time.Second * 1) {
+//		percentMem := strconv.Itoa(rand.Intn(100))
+//		fmt.Println(percentMem)
+//		Controller.InsertData("ram", percentMem)
+//	}
+//}

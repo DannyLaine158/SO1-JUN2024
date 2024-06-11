@@ -6,7 +6,7 @@ COPY . ./
 
 RUN go mod download
 
-ENV DB_HOST="DB"
+ENV DB_HOST="localhost"
 ENV DB_PORT="27017"
 ENV DB_NAME="DB"
 
