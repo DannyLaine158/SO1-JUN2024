@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  database:
+    image: mongo
+    container_name: mongo-container
+    restart: always
+    environment:
+      - MONGO_INITDB_DATABSE=DB
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - '27017:27017'
+
+  backend:
+    image: jdveloper/so1_back_jun2024
+    container_name: backend_container
+    environment:
+      - DB_HOST=database
+      - DB_PORT=27017
+      - DB_NAME=DB
+    ports:
+      - '8000:8000'
+    restart: always
+    depends_on:
+      - database
+    links:
+      - database
+
+  frontend:
+    image: jdveloper/so1_front_jun2024
+    container_name: front_container
+    ports:
+      - '80:80'
+    restart: always
+    depends_on:
+      - backend
+    links:
+      - backend
+
+volumes:
+  mongo-data:
+    external: false
