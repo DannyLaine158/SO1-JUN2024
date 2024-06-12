@@ -10,5 +10,8 @@ export default defineConfig({
     },
     host: true,
     port: 5173,
+    proxy: {
+      '/insertRam': 'http://backend:8000'
+    }
   }
 });

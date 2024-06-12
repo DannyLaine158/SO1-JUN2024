@@ -1,7 +1,7 @@
-const url = "http://localhost:8000";
+// const url = "http://localhost:8000";
 
 export function getRam() {
-    return fetch(`${url}/insertRam`, {
+    return fetch(`/insertRam`, {
         headers: {'Content-Type': 'application/json'},
         method: 'GET',
     });
