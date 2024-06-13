@@ -6,7 +6,6 @@ import (
 	"context"
 	"github.com/gofiber/fiber/v2"
 	"log"
-	"math/rand"
 	"os/exec"
 	"strconv"
 )
@@ -16,7 +15,7 @@ func Setup(app *fiber.App) {
 		return ctx.JSON("Hello World")
 	})
 
-	app.Get("/insertRam", func(ctx *fiber.Ctx) error {
+	app.Get("/getRam", func(ctx *fiber.Ctx) error {
 		nameCol := "ram"
 		collection := Instance.Mg.Db.Collection(nameCol)
 
@@ -25,17 +24,24 @@ func Setup(app *fiber.App) {
 			return err
 		}
 
-		dataParam := strconv.Itoa(rand.Intn(100))
+		cmd := exec.Command("sh", "-c", "cat /proc/ram_201800722")
+		output, err := cmd.CombinedOutput()
+		if err != nil {
+			log.Fatalln(err)
+		}
+		out := string(output[:])
 
-		// collection = Instance.Mg.Db.Collection(nameCol)
-		doc := Model.Data{Percent: dataParam}
+		doc := Model.Data{Percent: out}
 
 		_, err = collection.InsertOne(context.TODO(), doc)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		return ctx.Status(201).JSON(dataParam)
+		return ctx.JSON(fiber.Map{
+			"status":  200,
+			"percent": out,
+		})
 	})
 
 	app.Get("/insertProcess", func(ctx *fiber.Ctx) error {
