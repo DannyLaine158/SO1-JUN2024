@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = './;confproto';
+
+package confproto;
+
+service getInfo {
+  rpc returnInfo(requestId) returns (replyInfo) {}
+}
+
+message requestId {
+  string texto = 1;
+  string pais = 2;
+}
+
+message replyInfo {
+  string info = 1;
+}
