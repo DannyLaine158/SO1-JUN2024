@@ -23,7 +23,7 @@ spec:
             cpu: "0.4"
             memory: "500Mi"
       - name: grpc-server
-        image: jdveloper/grpc-client
+        image: jdveloper/grpc-server
         ports:
         - containerPort: 3001
         resources:
