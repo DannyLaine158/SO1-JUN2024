@@ -24,3 +24,6 @@ kubectl create deployment nombre_deployment --image=gcr.io/id_proyecto/nombre_im
 
 2. Servir en produccion
 kubectl expose deployment nombre_deployment --type=LoadBalancer --port puerto -n=nombre_namespace
+
+# Deployar archivos yaml
+`kubectl apply -f <file.yml>`
