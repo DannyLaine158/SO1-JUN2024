@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-producer
+  namespace: so1-proyecto2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grpc-producer
+  template:
+    metadata:
+      labels:
+        app: grpc-producer
+    spec:
+      containers:
+      - name: grpc-client
+        image: jdveloper/grpc-client
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            cpu: "0.4"
+            memory: "500Mi"
+      - name: grpc-server
+        image: jdveloper/grpc-client
+        ports:
+        - containerPort: 3001
+        resources:
+          limits:
+            cpu: "0.4"
+            memory: "500Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grpc-client-service
+  namespace: so1-proyecto2
+spec:
+  selector:
+    app: grpc-producer
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP
