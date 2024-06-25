@@ -27,3 +27,6 @@ kubectl expose deployment nombre_deployment --type=LoadBalancer --port puerto -n
 
 # Deployar archivos yaml
 `kubectl apply -f <file.yml>`
+
+# Ver logs de los pods y contenedores
+`kubectl logs [-f] grpc-producer-745788bbbd-w8vhn [--container grpc-server] -n so1jun2024`
