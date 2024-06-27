@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rust-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rust-redis
+  template:
+    metadata:
+      labels:
+        app: rust-redis
+    spec:
+      containers:
+      - name: rust-redis
+        image: jdveloper/rust-redis:1.0.2
+        ports:
+        - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rust-redis
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8000
+    targetPort: 8000
+  selector:
+    app: rust-redis
